@@ -12,12 +12,25 @@ stdin.on("data", function (chunk) {
   data += chunk;
 });
 
+function haveAShape(item) {
+  return item["shape"] != undefined;
+}
+
+function isContentChunkAndNotNull(chunk) {
+  if (chunk["type"] != "contentChunk") return false;
+  if (chunk["content"] == null) return false;
+  return true;
+}
+
+function isNotNull(component) {
+  if (component["content"] == null) return false;
+  return true;
+}
+
 stdin.on("end", function () {
   var raw = JSON.parse(data);
   raw["data"]["catalogue"]["children"].forEach((item) => {
-    if (item["shape"] == undefined) {
-      return;
-    }
+    if (!haveAShape(item)) return;
 
     const page = new Page();
     page.name = item["name"];
@@ -27,18 +40,15 @@ stdin.on("end", function () {
 
     page.blocks = Array();
     item.components.forEach((c) => {
-      if (c["type"] != "contentChunk" || c["content"] == null) {
-        return;
-      }
+      if (!isContentChunkAndNotNull(c)) return;
 
       c.content.chunks.forEach((chunk) => {
         const block = new Block();
         block.type = c.id;
 
         chunk.forEach((component) => {
-          if (component.content == null) {
-            return;
-          }
+          if (!isNotNull(component)) return;
+          
           switch (component.type) {
             case "singleLine":
               block[component.id] = component.content.text;
@@ -83,11 +93,15 @@ stdin.on("end", function () {
     page.blocks.sort(compare);
     console.log(JSON.stringify(page));
 
-    fs.writeFileSync(`out/tmp/${page.name}.md`, JSON.stringify(page), function (err) {
-      if (err) {
-        return console.log("error");
+    fs.writeFileSync(
+      `out/tmp/${page.name.toLowerCase().replace(' ', '-')}.md`,
+      JSON.stringify(page),
+      function (err) {
+        if (err) {
+          return console.log("error");
+        }
       }
-    });
+    );
   });
 });
 
