@@ -1,1 +1,32 @@
 @import 'normalize';
+
+html {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+$c_primaryColor:#005500;
+$c_primaryTextColor:#fff;
+
+$c_secondaryColor:#113311;
+$c_primaryTextColor:#aaa;
+
+.bgPrimary {background-color:$c_primaryColor;width:100%;}
+.bgSecondary {background-color:$c_secondaryColor;width:100%;}
+header, footer, section {width:76rem;margin:0 auto;}
+
+header {height: 12rem;margin-bottom:3rem;
+    > a {position:absolute;margin:0 -7.5rem;left:50%;right: 50%;
+        img {width: 15rem;height:auto;}
+    }
+    nav {padding-top:5rem;
+        ul {margin:0;padding: 0;display:flex;
+            li {list-style-type:none;margin:0 1rem;
+                a {color:$c_primaryTextColor;}
+            }
+        }
+    }
+}
+
+footer {color: $c_primaryTextColor;height: 20rem;
+
+}
