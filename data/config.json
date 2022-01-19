@@ -1,0 +1,7 @@
+{
+  "name": "site-config",
+  "primaryColor": "red",
+  "secondaryColor": "blue",
+  "primaryTextColor": "green",
+  "secondaryTextColor": "yellow"
+}

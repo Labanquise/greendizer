@@ -1,4 +1,5 @@
-baseURL = 'http://www.labanqui.se/greendizer'
+baseURL = 'http://www.labanqui.se/greendizer/'
 languageCode = 'fr-FR'
 title = 'Greendizer'
 theme = 'dukeFleed'
+disableKinds = ["taxonomy", "taxonomyTerm"]
